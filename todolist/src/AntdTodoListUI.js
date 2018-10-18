@@ -10,7 +10,7 @@ const AntdTodoListUI = (props) =>{
             <Input placeholder ='todo info'
                    style = {{ width: '400px'}}
                 // value={this.state.inputvalue}
-                   value={props.inputvalue}
+                   value={props.inputValue}
                 // onChange = {this.handleInputChange}
                    onChange = {props.handleInputChange}
             />
@@ -29,7 +29,7 @@ const AntdTodoListUI = (props) =>{
                 renderItem={(item,index) => (
                     <List.Item
                         // onClick = {this.handleItemDelete.bind(this,index)}>
-                        onClick ={(index) => {
+                        onClick ={() => {
                             props.handleItemDelete(index)
                         }
                         }>
@@ -48,7 +48,7 @@ export default AntdTodoListUI;
 //                 <Input placeholder ='todo info'
 //                        style = {{ width: '400px'}}
 //                        // value={this.state.inputvalue}
-//                        value={this.props.inputvalue}
+//                        value={this.props.inputValue}
 //                        // onChange = {this.handleInputChange}
 //                        onChange = {this.props.handleInputChange}
 //                 />

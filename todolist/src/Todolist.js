@@ -6,7 +6,7 @@ class Todolist extends Component {
   constructor(props){
     super(props);
     this.state = {
-      inputvalue:'',
+      inputValue:'',
       list:[]
     }
     this.handleBtnChange = this.handleBtnChange.bind(this);
@@ -38,7 +38,7 @@ class Todolist extends Component {
             <label htmlFor="insertArea">please input </label>
               <input
                   id = "insertArea"
-                  value = {this.state.inputvalue}
+                  value = {this.state.inputValue}
           onChange={this.handleInputChange}>
 
               </input>
@@ -70,7 +70,7 @@ class Todolist extends Component {
     handleInputChange(e){
       this.setState(
           {
-              inputvalue:e.target.value
+              inputValue:e.target.value
           }
       )
     }
@@ -78,9 +78,9 @@ class Todolist extends Component {
     handleBtnChange(){
       this.setState(
           ()=>{
-            const list  = [...this.state.list,this.state.inputvalue];
+            const list  = [...this.state.list,this.state.inputValue];
             return ({
-                inputvalue:'',
+                inputValue:'',
                 list:list
             })
           }

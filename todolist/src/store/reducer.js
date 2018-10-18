@@ -1,19 +1,19 @@
-import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM } from './actionTypes';
+import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM ,INIT_LIST_AX,GET_INIT_LIST} from './actionTypes';
 
 const defaultState = {
-    inputvalue : '',
+    inputValue : '',
     list: []
 }
 export default (state  = defaultState,action) =>{
     if (action.type === CHANGE_INPUT_VALUE){
         const newState = JSON.parse(JSON.stringify(state));
-        newState.inputvalue = action.value;
+        newState.inputValue = action.value;
         return newState;
     }
     if (action.type === ADD_TODO_ITEM){
         const newState = JSON.parse(JSON.stringify(state));
-        newState.list.push(newState.inputvalue);
-        newState.inputvalue = "";
+        newState.list.push(newState.inputValue);
+        newState.inputValue = "";
         return newState;
     }
     if (action.type === DELETE_TODO_ITEM){
@@ -21,8 +21,13 @@ export default (state  = defaultState,action) =>{
         newState.list.splice(action.index,1);
         return newState;
     }
+    if (action.type === INIT_LIST_AX){
+        const newState = JSON.parse(JSON.stringify(state));
+        newState.list = action.data;
+        return newState;
+    }
 
 
-    console.log(state,action)
+    console.log(state,action);
     return state;
 }

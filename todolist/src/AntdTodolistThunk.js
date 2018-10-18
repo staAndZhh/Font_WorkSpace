@@ -1,8 +1,9 @@
 import React , { Component } from  'react';
-import { Button ,Input, List} from 'antd';
-import store from './store';
+import store from './store/index';
 import  'antd/dist/antd.css';
-import {getInputChangeAction,getAddItemAction,getDeleteItemAction} from './store/actionCreator';
+import {getInputChangeAction,getAddItemAction,getDeleteItemAction,initListAction,getTodoList} from './store/actionCreator';
+import  AntdTodoListUI from './AntdTodoListUI';
+import axios from "axios";
 // import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM } from './store/actionTypes';
 
 
@@ -14,15 +15,18 @@ import {getInputChangeAction,getAddItemAction,getDeleteItemAction} from './store
 //     'Los Angeles battles huge wildfires.',
 // ];
 
-class AntdTodolistRedux extends Component{
+class AntdTodolistThunk extends Component{
 
     constructor(props){
         super(props);
 
         this.handleInputChange = this.handleInputChange.bind(this);
 
-        this.handleStoreChange = this.handleStoreChange.bind(this);
+
         this.handleBtnClick = this.handleBtnClick.bind(this);
+
+        this.handleItemDelete = this.handleItemDelete.bind(this);
+        this.handleStoreChange = this.handleStoreChange.bind(this);
         console.log(store.getState());
         this.state = store.getState();
 
@@ -30,20 +34,39 @@ class AntdTodolistRedux extends Component{
     }
     render(){
         return(
-            <div style={{marginTop :'10px', marginLeft:'10px'}}>
-                <Input placeholder ='todo info' style = {{ width: '400px'}} value={this.state.inputValue}
-                 onChange = {this.handleInputChange} />
-                <Button type="primary" onClick={this.handleBtnClick}> commit </Button>
-                <List
-                    bordered
-                    style = {{ marginTop:'10px', width:'300px'}}
-                    // dataSource={data}
-                    // dataSource={[]}
-                    dataSource = {this.state.list}
-                    renderItem={(item,index) => (<List.Item onClick = {this.handleItemDelete.bind(this,index)}>{item}</List.Item>)}
-                />
-            </div>
+            <AntdTodoListUI
+            inputValue = {this.state.inputValue}
+            handleBtnClick = {this.handleBtnClick}
+            handleInputChange = {this.handleInputChange}
+
+            list = {this.state.list}
+            handleItemDelete = {this.handleItemDelete}
+            />
         )
+    }
+    componentDidMount(){
+        // axios.get('/api/todolist').then(
+        //     (res)=>{
+        //         // alert('succ');
+        //         // this.setState(()=>{
+        //         //     return{
+        //         //         list:[...res.data]
+        //         //     }
+        //         // })
+        //         const data = res.data;
+        //         const action = initListAction(data);
+        //         store.dispatch(action);
+        //     }
+        // ).catch(
+        //     ()=>{
+        //         alert('error')
+        //         const data = [1,2];
+        //         const action = initListAction(data);
+        //         store.dispatch(action);
+        //     }
+        // )
+        const action = getTodoList();
+        store.dispatch(action);
     }
 
     handleInputChange(e){
@@ -53,7 +76,7 @@ class AntdTodolistRedux extends Component{
         // }
         const action = getInputChangeAction(e.target.value);
         store.dispatch(action);
-       console.log(e.target.value);
+        console.log(e.target.value);
     }
     handleBtnClick(){
         // const action = {
@@ -76,4 +99,4 @@ class AntdTodolistRedux extends Component{
         this.setState(store.getState());
     }
 }
-export default AntdTodolistRedux;
+export default AntdTodolistThunk;
